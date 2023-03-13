@@ -67,7 +67,35 @@ if ($uploadOk == 0) {
 ?>
 
 <?php
-// Cookies
+// Cookies --> MOET EIGENLIJK VOOR DE html-TAG!!!!
+$cookie_name = "user";
+$cookie_value = "John Doe";
+setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+
+// Sessions --> SESSION START MOET VOOR DE html-TAG, setting session variables kan gwn in de body ?>
+<?php session_start(); ?>
+
+<?php
+$_SESSION["favcolor"] = "green";
+$_SESSION["favanimal"] = "cat";
+
+print_r($_SESSION);
+
+// Filter extension 
+foreach (filter_list() as $id =>$filter) {
+    echo '<tr><td>' . $filter . '</td><td>' . filter_id($filter) . '</td></tr>';
+  }
+
+  $email = "john.doe@example.com";
+  $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+    echo("$email is a valid email address");
+  } else {
+    echo("$email is not a valid email address");
+  }
+
+// Filters advanced
+
 
 
 ?>
