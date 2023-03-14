@@ -94,10 +94,81 @@ foreach (filter_list() as $id =>$filter) {
     echo("$email is not a valid email address");
   }
 
-// Filters advanced
+// Filters advanced --> filter_var
+$int = 122;
+$min = 1;
+$max = 200;
+
+if (filter_var($int, FILTER_VALIDATE_INT, array("options" => array("min_range"=>$min, "max_range"=>$max))) === false) {
+  echo("Variable value is not within the legal range");
+} else {
+  echo("Variable value is within the legal range");
+}
 
 
+$str = "<h1>Hello WorldÆØÅ!</h1>";
+$newstr = filter_var($str, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+echo $newstr;
 
+// Callback functions --> array_map()
+function my_callback($item) {
+    return strlen($item);
+  }
+  
+  $strings = ["apple", "orange", "banana", "coconut"];
+  $lengths = array_map("my_callback", $strings);
+  print_r($lengths);
+
+
+// JSON
+  // encode
+  $age = array("Peter"=>35, "Ben"=>37, "Joe"=>43);
+  echo json_encode($age);
+
+  // decode
+  $jsonobj = '{"Peter":35,"Ben":37,"Joe":43}';
+  var_dump(json_decode($jsonobj));
+
+
+// Exceptions
+  // throw --> geeft foutmelding en stopt
+  function divide($dividend, $divisor) {
+    if($divisor == 0) {
+      throw new Exception("Division by zero");
+    }
+    return $dividend / $divisor;
+  }
+  echo divide(5, 0);
+
+  // try ... catch --> gaat verder na foutmelding
+  function divide($dividend, $divisor) {
+    if($divisor == 0) {
+      throw new Exception("Division by zero");
+    }
+    return $dividend / $divisor;
+  }
+  
+  try {
+    echo divide(5, 0);
+  } catch(Exception $e) {
+    echo "Unable to divide.";
+  }
+
+  // try ... catch ... finally --> het finally gedeelte gaat altijd door, ook bij foutmelding
+  function divide($dividend, $divisor) {
+    if($divisor == 0) {
+      throw new Exception("Division by zero");
+    }
+    return $dividend / $divisor;
+  }
+  
+  try {
+    echo divide(5, 0);
+  } catch(Exception $e) {
+    echo "Unable to divide. ";
+  } finally {
+    echo "Process complete.";
+  }
 ?>
 
 
